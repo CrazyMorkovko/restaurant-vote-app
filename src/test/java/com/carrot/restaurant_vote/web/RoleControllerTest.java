@@ -30,7 +30,7 @@ class RoleControllerTest extends ControllerTest {
 
     @Test
     @WithUserDetails("Vadim")
-    void findAllByUserIdNotAdmin() throws Exception {
+    void findAllByUserIdByNotAdmin() throws Exception {
         mvc.perform(get("/api/1.0/user/9/role"))
                 .andExpect(status().isForbidden());
     }
@@ -47,7 +47,7 @@ class RoleControllerTest extends ControllerTest {
 
     @Test
     @WithUserDetails("Vadim")
-    void addRoleNotAdmin() throws Exception {
+    void addRoleByNotAdmin() throws Exception {
         var role = RoleTo.builder().role(RoleType.ADMIN).build();
         mvc.perform(post("/api/1.0/user/10/role")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +67,7 @@ class RoleControllerTest extends ControllerTest {
 
     @Test
     @WithUserDetails("Vadim")
-    void deleteRoleNotAdmin() throws Exception {
+    void deleteRoleByNotAdmin() throws Exception {
         var role = RoleTo.builder().role(RoleType.ADMIN).build();
         mvc.perform(delete("/api/1.0/user/9/role")
                 .contentType(MediaType.APPLICATION_JSON)
