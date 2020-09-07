@@ -16,6 +16,7 @@ public class RestaurantMenuWithDish {
     private LocalDate date;
     private RestaurantTO restaurant;
     private Set<DishTO> dishes;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Integer votes;
 

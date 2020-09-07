@@ -6,12 +6,9 @@ import com.carrot.restaurant_vote.web.dto.CreateUser;
 import com.carrot.restaurant_vote.web.dto.UpdateEmail;
 import com.carrot.restaurant_vote.web.dto.VoteTO;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalTime;
@@ -22,8 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class UserControllerTest extends ControllerTest {
     @Test
     @WithAnonymousUser

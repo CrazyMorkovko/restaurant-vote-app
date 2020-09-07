@@ -3,11 +3,8 @@ package com.carrot.restaurant_vote.web;
 import com.carrot.restaurant_vote.JsonUtil;
 import com.carrot.restaurant_vote.web.dto.MenuTO;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
@@ -18,16 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 class MenuControllerTest extends ControllerTest {
+    private final MenuTO MENU = MenuTO.builder().date(LocalDate.now()).build();
     @Test
     void findAllByDate() throws Exception {
-        mvc.perform(get("/api/1.0/restaurant/menu/by-date/" + LocalDate.now()))
+        mvc.perform(get("/api/1.0/restaurant/menu/by-date/" + LocalDate.now().minusDays(1)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].id", is(14)))
-                .andExpect(jsonPath("$[1].id", is(6)));
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(5)));
     }
 
     @Test
@@ -41,30 +36,27 @@ class MenuControllerTest extends ControllerTest {
     @Test
     @WithUserDetails("Regina")
     void create() throws Exception {
-        var menu = MenuTO.builder().date(LocalDate.now()).build();
         mvc.perform(post("/api/1.0/restaurant/19/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(menu)))
+                .content(JsonUtil.writeValue(MENU)))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithUserDetails("Regina")
     void createForRestaurantWithMenu() throws Exception {
-        var menu = MenuTO.builder().date(LocalDate.now()).build();
         mvc.perform(post("/api/1.0/restaurant/7/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(menu)))
+                .content(JsonUtil.writeValue(MENU)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     @WithUserDetails("Vadim")
     void createByNotAdmin() throws Exception {
-        var menu = MenuTO.builder().date(LocalDate.now()).build();
         mvc.perform(post("/api/1.0/restaurant/19/menu")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(menu)))
+                .content(JsonUtil.writeValue(MENU)))
                 .andExpect(status().isForbidden());
     }
 

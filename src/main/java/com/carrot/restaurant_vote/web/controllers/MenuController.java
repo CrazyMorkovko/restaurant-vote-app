@@ -12,7 +12,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -65,8 +64,8 @@ public class MenuController extends Controller {
         return menu;
     }
 
-    @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
+    @PostMapping("/{restaurantId}/menu")
     @CacheEvict(value = "menus", allEntries = true)
     public Menu create(@Valid @RequestBody MenuTO menuTO, @PathVariable Integer restaurantId) {
         if (menuRepository.findByDateAndRestaurantId(menuTO.getDate(), restaurantId).isEmpty()) {

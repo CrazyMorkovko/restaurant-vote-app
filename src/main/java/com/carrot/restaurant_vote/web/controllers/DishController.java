@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/api/1.0/menu/{menuId}/dish", produces = MediaType.APPLICATION_JSON_VALUE)
 @Secured("ROLE_ADMIN")
+@RequestMapping(value = "/api/1.0/menu/{menuId}/dish", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DishController extends Controller {
     private final DishRepository dishRepository;
     private final MenuRepository menuRepository;
