@@ -13,9 +13,10 @@ import java.util.Set;
 @Repository
 public interface VoteRepository extends CrudRepository<Vote, Integer> {
     Iterable<Vote> findAllByUserId(Integer userId);
+
     Optional<Vote> findByDateAndUserId(LocalDate date, Integer userId);
 
-//    @Query("SELECT new com.carrot.restaurant_vote.models.VoteCount(v.menu, COUNT(v)) FROM Vote as v " +
+    //    @Query("SELECT new com.carrot.restaurant_vote.models.VoteCount(v.menu, COUNT(v)) FROM Vote as v " +
 //            "WHERE v.date = :date GROUP BY v.menu ORDER BY 2 DESC")
     @Query(nativeQuery = true, value = "SELECT v.menu_id as menuId, COUNT(v.menu_id) as count FROM votes as v " +
             "WHERE v.date = :date GROUP BY menuId ORDER BY count DESC")

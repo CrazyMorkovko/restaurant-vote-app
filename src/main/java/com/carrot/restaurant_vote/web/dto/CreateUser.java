@@ -1,6 +1,5 @@
 package com.carrot.restaurant_vote.web.dto;
 
-import com.carrot.restaurant_vote.models.User;
 import com.carrot.restaurant_vote.validation.UniqueEmail;
 import com.carrot.restaurant_vote.validation.UniqueUserName;
 import lombok.Builder;

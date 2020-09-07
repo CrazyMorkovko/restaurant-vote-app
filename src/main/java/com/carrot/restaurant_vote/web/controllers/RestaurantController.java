@@ -1,13 +1,11 @@
 package com.carrot.restaurant_vote.web.controllers;
 
 import com.carrot.restaurant_vote.models.Restaurant;
-import com.carrot.restaurant_vote.models.User;
 import com.carrot.restaurant_vote.repositories.RestaurantRepository;
 import com.carrot.restaurant_vote.web.dto.RestaurantTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

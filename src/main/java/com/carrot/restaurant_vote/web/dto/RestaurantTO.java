@@ -1,7 +1,8 @@
 package com.carrot.restaurant_vote.web.dto;
 
 import com.carrot.restaurant_vote.models.Restaurant;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

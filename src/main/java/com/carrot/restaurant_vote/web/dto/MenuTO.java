@@ -1,6 +1,5 @@
 package com.carrot.restaurant_vote.web.dto;
 
-import com.carrot.restaurant_vote.models.Menu;
 import lombok.Builder;
 import lombok.Data;
 

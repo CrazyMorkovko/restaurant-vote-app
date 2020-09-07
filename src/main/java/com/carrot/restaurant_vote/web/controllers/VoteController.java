@@ -2,7 +2,11 @@ package com.carrot.restaurant_vote.web.controllers;
 
 import com.carrot.restaurant_vote.models.Vote;
 import com.carrot.restaurant_vote.repositories.VoteRepository;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
@@ -21,7 +25,10 @@ public class VoteController extends Controller {
     }
 
     @GetMapping("by-date/{date}")
-    public Vote findByDate(@PathVariable LocalDate date, @PathVariable Integer userId) {
+    public Vote findByDate(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @PathVariable Integer userId
+    ) {
         return getOrFail(voteRepository.findByDateAndUserId(date, userId));
     }
 }

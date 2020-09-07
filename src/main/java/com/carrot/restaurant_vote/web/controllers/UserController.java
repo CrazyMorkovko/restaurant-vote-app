@@ -37,7 +37,7 @@ public class UserController extends Controller {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/profile")
+    @GetMapping("profile")
     public UserProfile profile(Authentication authentication) {
         var user = getUser(authentication);
         var vote = voteRepository.findByDateAndUserId(LocalDate.now(), user.getId());
@@ -85,7 +85,8 @@ public class UserController extends Controller {
     public Vote createVote(@Valid @RequestBody VoteTO voteTO, Authentication authentication) {
         var user = getUser(authentication);
 
-        if (voteRepository.findByDateAndUserId(LocalDate.now(), user.getId()).isEmpty()) {
+        if (getOrFail(menuRepository.findById(voteTO.getMenuId())).getDate().equals(LocalDate.now())
+                && voteRepository.findByDateAndUserId(LocalDate.now(), user.getId()).isEmpty()) {
             return voteRepository.save(new Vote(
                     LocalDate.now(),
                     user,
