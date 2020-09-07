@@ -1,20 +1,18 @@
 package com.carrot.restaurant_vote;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.util.List;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class JsonUtil {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static <T> List<T> readValues(String json, Class<T> clazz) {
-        try {
-            return MAPPER.readerFor(clazz).<T>readValues(json).readAll();
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Invalid read array from JSON:\n'" + json + "'", e);
-        }
+    static {
+        MAPPER.registerModule(new JavaTimeModule());
+        MAPPER.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        MAPPER.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     public static <T> String writeValue(T object) {

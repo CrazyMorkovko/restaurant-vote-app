@@ -15,7 +15,8 @@ INSERT INTO user_roles (user_id, roles_id) VALUES
 
 INSERT INTO restaurants (id, name, user_id) VALUES
 (7, 'Okayama', 9),
-(8, 'Denny''s', 9);
+(8, 'Denny', 9),
+(19, 'Barbecue', 9);
 
 INSERT INTO menus (id, date, restaurant_id) VALUES
 (5, CURRENT_DATE() - INTERVAL 1 DAY, 7),
@@ -34,4 +35,4 @@ INSERT INTO votes (id, date, menu_id, user_id) VALUES
 (11, CURRENT_DATE() - INTERVAL 1 DAY, 5, 10),
 (17, CURRENT_DATE(), 14, 10);
 
-ALTER sequence HIBERNATE_SEQUENCE restart with 19;
+ALTER sequence HIBERNATE_SEQUENCE restart with 20;

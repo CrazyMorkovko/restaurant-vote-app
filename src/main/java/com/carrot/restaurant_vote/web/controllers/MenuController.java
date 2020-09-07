@@ -11,8 +11,11 @@ import com.carrot.restaurant_vote.web.dto.RestaurantMenuWithDish;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -62,11 +65,16 @@ public class MenuController extends Controller {
         return menu;
     }
 
-    @PostMapping("{restaurantId}/menu")
+    @PostMapping(value = "/{restaurantId}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Secured("ROLE_ADMIN")
     @CacheEvict(value = "menus", allEntries = true)
     public Menu create(@Valid @RequestBody MenuTO menuTO, @PathVariable Integer restaurantId) {
-        return menuRepository.save(new Menu(menuTO.getDate(), getOrFail(restaurantRepository.findById(restaurantId))));
+        if (menuRepository.findByDateAndRestaurantId(menuTO.getDate(), restaurantId).isEmpty()) {
+            return menuRepository.save(new Menu(menuTO.getDate(), getOrFail(restaurantRepository.findById(restaurantId))));
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @GetMapping("menu/{id}/count-votes")
